@@ -187,6 +187,64 @@ A plugin that adds a generic mechanism for tagging data.
                                 return Collections.EMPTY_LIST                                
                             }
                         }
+						findAllByTagInList { List names ->
+							def identifiers = TaggableGrailsPlugin.getTagReferences(tagService, names, delegate.name)
+							if(identifiers) {
+								args.cache=true
+								delegate.findAllByIdInList(identifiers, [cache:true])
+							}
+							else {
+								return Collections.EMPTY_LIST
+							}
+						}
+						findAllByTagInList { List names, Map args->
+							def identifiers = TaggableGrailsPlugin.getTagReferences(tagService, names, delegate.name)
+							if(identifiers) {
+								args.cache=true
+								delegate.findAllByIdInList(identifiers, args)
+							}
+							else {
+								return Collections.EMPTY_LIST
+							}
+						}
+						findAllByAllTagsInList { Collection names, Map args->
+							def identifiers = new LinkedHashSet()
+							def className = delegate.name
+							names.each {name ->
+								if (identifiers) {
+									identifiers.retainAll(TaggableGrailsPlugin.getTagReferences(tagService, name, className))
+								}
+								else {
+									identifiers.addAll(TaggableGrailsPlugin.getTagReferences(tagService, name, className))
+								}
+							}
+							if(identifiers) {
+								args.cache=true
+								delegate.findAllByIdInList(identifiers, args)
+							}
+							else {
+								return Collections.EMPTY_LIST
+							}
+						}
+						findAllByAllTagsInList { Collection names->
+							def identifiers = new LinkedHashSet()
+							def className = delegate.name
+							names.each {name ->
+								if (identifiers) {
+									identifiers.retainAll(TaggableGrailsPlugin.getTagReferences(tagService, name, className))
+								}
+								else {
+									identifiers.addAll(TaggableGrailsPlugin.getTagReferences(tagService, name, className))
+								}
+							}
+							if(identifiers) {
+								args.cache=true
+								delegate.findAllByIdInList(identifiers, [cache:true])
+							}
+							else {
+								return Collections.EMPTY_LIST
+							}
+						}
                         findAllByTagWithCriteria { String name, Closure crit ->
                             def clazz = delegate
                             def identifiers = TaggableGrailsPlugin.getTagReferences(tagService, name, clazz.name)
@@ -256,4 +314,22 @@ A plugin that adds a generic mechanism for tagging data.
         }    
     }
 
+	static getTagReferences(tagService, List tagNames, String className) {
+		if(tagNames) {
+			TagLink.withCriteria {
+				projections {
+					property 'tagRef'
+				}
+				tag {
+					'in'('name', tagNames.collect{it as String})
+				}
+				'in'('type', tagService.domainClassFamilies[className])
+				cache true
+			}
+
+		}
+		else {
+			return Collections.EMPTY_LIST
+		}
+	}
 }
