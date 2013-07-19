@@ -16,7 +16,6 @@ package org.grails.taggable
 
 import org.codehaus.groovy.grails.commons.*
 
-
 /**
  * A link class used to link a tag to another entity using the class name and identifier pairing
  * 
@@ -25,12 +24,11 @@ import org.codehaus.groovy.grails.commons.*
 class TagLink implements Serializable {
 
 	Tag tag
-	Long tagRef
+	String tagRef
 	String type
 	
 	static constraints = {
 		type blank:false
-		tagRef min:0L
 	}
 
 	static mapping = {
