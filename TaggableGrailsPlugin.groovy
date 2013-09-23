@@ -21,7 +21,7 @@ import grails.util.*
  * @author Graeme Rocher
  */
 class TaggableGrailsPlugin {
-    def version = "1.0.BUILD-SNAPSHOT"
+    def version = "1.0-pg"
     def grailsVersion = "1.1 > *"
 
     def pluginExcludes = [
