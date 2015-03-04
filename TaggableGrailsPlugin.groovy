@@ -21,7 +21,7 @@ import grails.util.*
  * @author Graeme Rocher
  */
 class TaggableGrailsPlugin {
-    def version = "1.1.0-PG-1-SNAPSHOT"
+    def version = "1.1.0-PG-1"
     def grailsVersion = "2.3 > *"
     def license = 'APACHE'
 
