@@ -14,12 +14,9 @@
  */
 package org.grails.taggable
 
-import org.codehaus.groovy.grails.commons.*
-import grails.util.Holders
-
 /**
  * A link class used to link a tag to another entity using the class name and identifier pairing
- * 
+ *
  * @author Graeme Rocher
  */
 class TagLink implements Serializable {
@@ -27,7 +24,7 @@ class TagLink implements Serializable {
 	Tag tag
 	String tagRef
 	String type
-	
+
 	static constraints = {
 		type blank:false
 	}
@@ -36,18 +33,8 @@ class TagLink implements Serializable {
         cache 'read-write'
         tag cache:true, fetch:'join'
 
-        def config = Holders.config
-        if(config.grails.taggable.tagLink.table) {
-            table config.grails.taggable.tagLink.table.toString()
-        }
-        else {
-            table "tag_links"
-        }
+        table "tag_links"
 
-        if (config.grails.taggable.tagLink.autoImport instanceof Boolean) {
-            autoImport(config.grails.taggable.tagLink.autoImport)
-        } else {
-            autoImport false
-        }
+        autoImport false
     }
 }
