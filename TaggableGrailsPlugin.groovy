@@ -16,13 +16,13 @@ import org.grails.taggable.*
 import grails.util.*
 
 /**
- * A plugin that adds a generic mechanism for tagging data 
+ * A plugin that adds a generic mechanism for tagging data
 
  * @author Graeme Rocher
  */
 class TaggableGrailsPlugin {
-    def version = "1.1.0-PG-1"
-    def grailsVersion = "2.3 > *"
+    def version = "1.1.0-PG-2"
+    def grailsVersion = "2.5 > *"
     def license = 'APACHE'
 
     def pluginExcludes = [
