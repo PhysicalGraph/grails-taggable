@@ -27,7 +27,8 @@ class Tag implements Serializable{
 
     static Boolean preserveCaseForTesting = null
     static boolean getPreserveCaseFromConfig() {
-        Holders.config.getProperty('grails.taggable.preserve.case', Boolean, false)
+        Holders.config?.grails?.taggable?.preserve?.case instanceof ConfigObject ? false :
+                Holders.config.grails.taggable.preserve.case.toString().toBoolean()
     }
     static boolean getPreserveCase() {
         return (preserveCaseForTesting != null) ? preserveCaseForTesting : preserveCaseFromConfig
